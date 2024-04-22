@@ -83,7 +83,7 @@ async function checkWeather(city, date_index) {
 dropdowns.forEach(dropdown => {
     const select = dropdown.querySelector(".select");
     const menu = dropdown.querySelector('.menu');
-    const options = dropdown.querySelectorAll('.menu li'); // Changed querySelector to querySelectorAll
+    const options = dropdown.querySelectorAll('.menu li'); 
     const selected = dropdown.querySelector('.selected');
 
     select.addEventListener('click', () =>{
@@ -115,13 +115,10 @@ dropdowns.forEach(dropdown => {
 
 
 function createChart() {
-    // Check if a Chart instance exists
     if (window.myChart instanceof Chart) {
-        // If a Chart instance exists, destroy it
         window.myChart.destroy();
     }
 
-    // Create a new Chart instance
     window.myChart = new Chart(ctx, {
         type: 'line',
         data: {
