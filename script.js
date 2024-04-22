@@ -71,7 +71,7 @@ async function checkWeather(city, date_index) {
                 break;
         }
 
-        data_temp = [data.list[date_index-1].main.temp, data.list[date_index].main.temp, data.list[date_index+1].main.temp, data.list[date_index+2].main.temp, data.list[date_index+3].main.temp]
+        data_temp = [data.list[date_index-1].main.temp, data.list[date_index].main.temp, data.list[date_index+1].main.temp, data.list[date_index+2].main.temp, data.list[date_index+3].main.temp, data.list[date_index+4].main.temp]
         createChart();
         
         document.querySelector(".weather").style.display = "block";
@@ -122,7 +122,7 @@ function createChart() {
     window.myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['09:00','12:00', '15:00', '18:00', '21:00'],
+            labels: ['09:00','12:00', '15:00', '18:00', '21:00', '00:00'],
             datasets: [{
                 label: 'temperature',
                 data: data_temp,
