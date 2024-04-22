@@ -71,7 +71,7 @@ async function checkWeather(city, date_index) {
                 break;
         }
 
-        data_temp = [data.list[date_index].main.temp, data.list[date_index+1].main.temp, data.list[date_index+2].main.temp, data.list[date_index+3].main.temp, data.list[date_index+4].main.temp, data.list[date_index+5].main.temp,data.list[date_index+6].main.temp]
+        data_temp = [data.list[date_index-1].main.temp, data.list[date_index].main.temp, data.list[date_index+1].main.temp, data.list[date_index+2].main.temp, data.list[date_index+3].main.temp]
         createChart();
         
         document.querySelector(".weather").style.display = "block";
@@ -93,7 +93,7 @@ dropdowns.forEach(dropdown => {
 
     
     options.forEach((option, index) => {
-        let date_index = 8*(index)
+        let date_index = 8*(index)+1
         console.log(date_index)
         option.addEventListener('click', (() => {
             return (date_index => {
@@ -125,7 +125,7 @@ function createChart() {
     window.myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['03:00','6:00', '9:00', '12:00', '15:00','18:00', '21:00'],
+            labels: ['09:00','12:00', '15:00', '18:00', '21:00'],
             datasets: [{
                 label: 'temperature',
                 data: data_temp,
@@ -146,9 +146,14 @@ function createChart() {
     });
 }
 
+
+searchBox.addEventListener("mouseover", async ()=> {
+    const city = "bangkok";
+    await updateDropdownOptions(city);
+});
+
 searchBtn.addEventListener("click", async ()=> {
     const city = searchBox.value;
     await updateDropdownOptions(city);
     await checkWeather(city, 1);
 });
-
