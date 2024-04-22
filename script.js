@@ -165,5 +165,5 @@ oneDayBtn.addEventListener("click", ()=> {
 
 twoDaysBtn.addEventListener("click", ()=> {
     checkWeather(searchBox.value, 2);
-    myChart.update();
+    
 })
