@@ -83,39 +83,87 @@ async function checkWeather(city, days = 1) {
 }
 
 function createChart() {
-    new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['03:00','6:00', '9:00', '12:00', '15:00','18:00', '21:00'],
-        datasets: [{
-        label: 'temperature',
-        data: data_temp,
-        borderWidth: 1
-        }]
-    },
-    options: {
-        
-        scales: {
-        y: {
-            beginAtZero: true
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var data_temp_shifted = [null].concat(data_temp).concat([null]);
+    var dynamicColors = function(data) {
+        var colors = []; // Array to store colors
+        // Loop through each element in the data array
+        for (var i = 0; i < data.length; i++) {
+            var currentData = data[i]; // Get current element
+            // Check if current data is more than 24
+            if (currentData > 25) {
+                colors.push('orange'); // Add 'orange' to colors array
+            } else {
+                colors.push('#ADD8E6'); // Add 'blue' to colors array
+            }
+        }
+        return colors; // Return array of colors
+    };
+    var colorsArray = dynamicColors(data_temp_shifted);
+    
+    console.log(colorsArray);
+    var myChart = new Chart(ctx, {
+        type: 'line',
+
+        data: {
+            labels: ['','03:00', '6:00', '9:00', '12:00', '15:00', '18:00', '21:00',''],
+            datasets: [{
+                label: 'temperature',
+                data: data_temp_shifted,
+                borderColor: "teal",
+                backgroundColor: colorsArray,
+                borderWidth: 2,
+                pointRadius: 5,
+            }]
         },
-        x: {
-            display: true,
-            title: "Day",
-        }
-        }
-    }
+
+        plugins: [ChartDataLabels],
+        options: {
+            animation: false,
+
+            plugins: {
+                legend: {
+                    display: false
+                },
+                datalabels: {
+                    align: "bottom",
+                    offset: 10,
+                    borderColor: "grey",
+                    borderWidth: 1,
+                    borderRadius: 5,
+                    backgroundColor: "white",
+                    clamp: true,
+                    color: 'black'
+                }
+            },
+
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { display: true }
+                },
+                x: {
+                    display: true,
+                    title: "Day",
+                    grid: { display: true }
+                }
+            },
+        },
+
     });
-}
+    }
 
 searchBtn.addEventListener("click", ()=> {
     checkWeather(searchBox.value);
+    myChart.update();
 })
 
 oneDayBtn.addEventListener("click", ()=> {
     checkWeather(searchBox.value, 1);
+    myChart.update();
 })
 
 twoDaysBtn.addEventListener("click", ()=> {
     checkWeather(searchBox.value, 2);
+    myChart.update();
 })
